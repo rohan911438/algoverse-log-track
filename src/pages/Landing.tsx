@@ -29,23 +29,41 @@ const Landing = () => {
     try {
       // Check if Lute Wallet is installed
       if (!(window as any).lute) {
-        // For demo purposes, simulate a wallet connection
-        const demoMode = confirm("Lute Wallet not found. Would you like to try DEMO MODE instead?");
+        // Enhanced TestNet demo mode for hackathon
+        const demoMode = confirm("Lute Wallet not found. Would you like to try TESTNET DEMO MODE?\n\nThis will simulate a TestNet wallet connection for demonstration purposes.");
         
         if (demoMode) {
-          // Simulate wallet connection with demo address
-          const demoAddress = "DEMO7XEXAMPLEADDRESSFORALGOVERSETESTING123456789ABCDEF";
+          // Generate a realistic TestNet demo address
+          const demoAddress = "TESTNET7ALGOVRSEXAMPLEDEMOADDR4HACKATHON2024DEMO";
           setWalletAddress(demoAddress);
           setWalletConnected(true);
           localStorage.setItem('lute-wallet-address', demoAddress);
-          console.log("Demo mode activated:", demoAddress);
+          localStorage.setItem('wallet-type', 'demo');
+          localStorage.setItem('network', 'testnet');
+          
+          console.log("🌟 TestNet Demo Mode Activated!");
+          console.log("📱 Demo Address:", demoAddress);
+          console.log("🌐 Network: TestNet");
+          console.log("💡 This simulates a real TestNet wallet for hackathon demonstration");
+          
+          // Show success message
+          alert(`🎉 Connected to TestNet Demo Mode!\n\nWallet: ${demoAddress.substring(0, 10)}...${demoAddress.slice(-10)}\nNetwork: Algorand TestNet\n\nYou can now test the app with simulated transactions!`);
+          
           return;
         } else {
-          throw new Error("Lute Wallet not found. Please install Lute Wallet extension first.");
+          throw new Error("Lute Wallet not found. Please install Lute Wallet extension or use Demo Mode for testing.");
         }
       }
 
-      // Connect to real Lute Wallet
+      // Connect to real Lute Wallet with TestNet configuration
+      console.log("🔌 Connecting to Lute Wallet on TestNet...");
+      
+      // Configure Lute for TestNet
+      if ((window as any).lute.setNetwork) {
+        await (window as any).lute.setNetwork('testnet');
+        console.log("🌐 Lute Wallet configured for TestNet");
+      }
+
       const accounts = await (window as any).lute.connect();
       if (accounts && accounts.length > 0) {
         const address = accounts[0];

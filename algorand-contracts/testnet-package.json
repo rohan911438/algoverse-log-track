@@ -1,0 +1,38 @@
+{
+  "name": "algoverse-testnet-deployment",
+  "version": "1.0.0",
+  "description": "TestNet deployment tools for AlgoVerse Log Track - Hackathon Ready!",
+  "type": "module",
+  "main": "deploy.js",
+  "scripts": {
+    "deploy": "node deploy.js",
+    "test": "node test-setup.js",
+    "test-connection": "node deploy.js test",
+    "help": "echo 'Available commands: npm run test, npm run deploy, npm run test-connection'"
+  },
+  "keywords": [
+    "algorand",
+    "testnet", 
+    "smart-contracts",
+    "hackathon",
+    "blockchain",
+    "algoverse"
+  ],
+  "dependencies": {
+    "algosdk": "^2.7.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rohan911438/algoverse-log-track.git"
+  },
+  "license": "MIT",
+  "author": "AlgoVerse Team"
+}
