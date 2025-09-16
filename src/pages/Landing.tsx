@@ -1,18 +1,95 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Zap, CheckCircle, Users, Globe, Award, TrendingUp, Clock, Star, ArrowRight, Lock } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Shield, Zap, CheckCircle, Users, Globe, Award, TrendingUp, Clock, Star, ArrowRight, Lock, Wallet, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const Landing = () => {
   const navigate = useNavigate();
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [walletConnected, setWalletConnected] = useState(false);
+  const [walletAddress, setWalletAddress] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
-  const handleVolunteerLogin = () => {
+  // Check for existing connection on load
+  useEffect(() => {
+    const savedAddress = localStorage.getItem('lute-wallet-address');
+    if (savedAddress) {
+      setWalletAddress(savedAddress);
+      setWalletConnected(true);
+    }
+  }, []);
+
+  const connectLuteWallet = async () => {
+    setIsConnecting(true);
+    setError("");
+    
+    try {
+      // Check if Lute Wallet is installed
+      if (!(window as any).lute) {
+        // For demo purposes, simulate a wallet connection
+        const demoMode = confirm("Lute Wallet not found. Would you like to try DEMO MODE instead?");
+        
+        if (demoMode) {
+          // Simulate wallet connection with demo address
+          const demoAddress = "DEMO7XEXAMPLEADDRESSFORALGOVERSETESTING123456789ABCDEF";
+          setWalletAddress(demoAddress);
+          setWalletConnected(true);
+          localStorage.setItem('lute-wallet-address', demoAddress);
+          console.log("Demo mode activated:", demoAddress);
+          return;
+        } else {
+          throw new Error("Lute Wallet not found. Please install Lute Wallet extension first.");
+        }
+      }
+
+      // Connect to real Lute Wallet
+      const accounts = await (window as any).lute.connect();
+      if (accounts && accounts.length > 0) {
+        const address = accounts[0];
+        setWalletAddress(address);
+        setWalletConnected(true);
+        
+        // Store in localStorage for persistence
+        localStorage.setItem('lute-wallet-address', address);
+        
+        console.log("Connected to Lute Wallet:", address);
+      }
+    } catch (err: any) {
+      console.error("Lute Wallet connection error:", err);
+      setError(err.message || "Failed to connect to Lute Wallet");
+    } finally {
+      setIsConnecting(false);
+    }
+  };
+
+  const handleVolunteerLogin = async () => {
+    if (!walletConnected) {
+      await connectLuteWallet();
+      // Check again after connection attempt
+      const savedAddress = localStorage.getItem('lute-wallet-address');
+      if (!savedAddress) return; // Don't navigate if connection failed
+    }
     navigate("/volunteer-dashboard");
   };
 
-  const handleOrganizerLogin = () => {
+  const handleOrganizerLogin = async () => {
+    if (!walletConnected) {
+      await connectLuteWallet();
+      // Check again after connection attempt
+      const savedAddress = localStorage.getItem('lute-wallet-address');
+      if (!savedAddress) return; // Don't navigate if connection failed
+    }
     navigate("/organizer-dashboard");
+  };
+
+  const disconnectWallet = () => {
+    localStorage.removeItem('lute-wallet-address');
+    setWalletAddress("");
+    setWalletConnected(false);
+    setError("");
   };
 
   const stats = [
@@ -123,6 +200,41 @@ const Landing = () => {
               Transform your volunteer work into <span className="text-cyan-400 font-semibold">verifiable digital assets</span> with blockchain-powered security and transparency
             </p>
 
+            {/* Wallet Status */}
+            {walletConnected && (
+              <div className="mb-8 p-4 bg-green-500/20 border border-green-500/30 rounded-lg max-w-md mx-auto">
+                <div className="flex items-center justify-center gap-2 text-green-400 mb-2">
+                  <Wallet className="h-5 w-5" />
+                  <span className="font-semibold">
+                    {walletAddress.includes("DEMO") ? "Demo Mode Active" : "Lute Wallet Connected"}
+                  </span>
+                </div>
+                <p className="text-sm text-green-300 text-center font-mono mb-3">
+                  {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
+                </p>
+                <div className="text-center">
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    onClick={disconnectWallet}
+                    className="text-green-400 border-green-400 hover:bg-green-400 hover:text-black"
+                  >
+                    Disconnect
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* Error Display */}
+            {error && (
+              <Alert className="mb-8 max-w-md mx-auto bg-red-500/20 border-red-500/30">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription className="text-red-300">
+                  {error}
+                </AlertDescription>
+              </Alert>
+            )}
+
             {/* Role Selection Buttons */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
               <div className="text-center">
@@ -130,12 +242,29 @@ const Landing = () => {
                 <Button 
                   size="lg" 
                   onClick={handleVolunteerLogin}
-                  className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-6 text-lg font-semibold shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105"
+                  disabled={isConnecting}
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-6 text-lg font-semibold shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Users className="mr-2 h-5 w-5" />
-                  Volunteer Login
+                  {isConnecting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      Connecting...
+                    </>
+                  ) : walletConnected ? (
+                    <>
+                      <Users className="mr-2 h-5 w-5" />
+                      Enter Dashboard
+                    </>
+                  ) : (
+                    <>
+                      <Wallet className="mr-2 h-5 w-5" />
+                      Connect & Log Contributions
+                    </>
+                  )}
                 </Button>
-                <p className="text-gray-400 text-sm mt-2">Log and track your contributions</p>
+                <p className="text-gray-400 text-sm mt-2">
+                  {walletConnected ? "Access your volunteer dashboard" : "Connect Lute Wallet to log contributions"}
+                </p>
               </div>
               
               <div className="text-center">
@@ -143,14 +272,81 @@ const Landing = () => {
                 <Button 
                   size="lg" 
                   onClick={handleOrganizerLogin}
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-6 text-lg font-semibold shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+                  disabled={isConnecting}
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-6 text-lg font-semibold shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Shield className="mr-2 h-5 w-5" />
-                  Organizer Login
+                  {isConnecting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      Connecting...
+                    </>
+                  ) : walletConnected ? (
+                    <>
+                      <Shield className="mr-2 h-5 w-5" />
+                      Enter Dashboard
+                    </>
+                  ) : (
+                    <>
+                      <Wallet className="mr-2 h-5 w-5" />
+                      Connect & Review Contributions
+                    </>
+                  )}
                 </Button>
-                <p className="text-gray-400 text-sm mt-2">Review and approve contributions</p>
+                <p className="text-gray-400 text-sm mt-2">
+                  {walletConnected ? "Access your organizer dashboard" : "Connect Lute Wallet to review contributions"}
+                </p>
               </div>
             </div>
+
+            {/* Lute Wallet Instructions */}
+            {!walletConnected && (
+              <div className="mb-16 max-w-2xl mx-auto">
+                <Card className="bg-white/10 backdrop-blur-sm border border-white/20">
+                  <CardHeader className="text-center">
+                    <CardTitle className="text-white flex items-center justify-center gap-2">
+                      <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                        <span className="text-sm font-bold text-white">L</span>
+                      </div>
+                      Connect with Lute Wallet
+                    </CardTitle>
+                    <CardDescription className="text-gray-300">
+                      Built specifically for Algorand ecosystem
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center justify-center space-x-4">
+                      <div className="flex items-center space-x-2 text-green-400">
+                        <CheckCircle className="h-4 w-4" />
+                        <span className="text-sm">Algorand Native</span>
+                      </div>
+                      <div className="flex items-center space-x-2 text-blue-400">
+                        <Shield className="h-4 w-4" />
+                        <span className="text-sm">Secure</span>
+                      </div>
+                      <div className="flex items-center space-x-2 text-purple-400">
+                        <Zap className="h-4 w-4" />
+                        <span className="text-sm">Fast</span>
+                      </div>
+                    </div>
+                    <p className="text-center text-gray-400 text-sm">
+                      Don't have Lute Wallet? 
+                      <a 
+                        href="https://lute.app" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="ml-2 text-purple-400 hover:text-purple-300 underline"
+                      >
+                        Download here
+                      </a>
+                      <br />
+                      <span className="text-xs text-gray-500 mt-2 block">
+                        Or click the buttons above to try <strong>Demo Mode</strong>
+                      </span>
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
 
             {/* Stats Section */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
