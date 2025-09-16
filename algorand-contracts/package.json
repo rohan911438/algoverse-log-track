@@ -9,7 +9,9 @@
     "build": "npm run compile-contract && npm run generate-client",
     "test": "npm run build && jest",
     "lint": "eslint . --ext .ts",
-    "fix": "eslint . --ext .ts --fix"
+    "fix": "eslint . --ext .ts --fix",
+    "deploy:testnet": "ts-node scripts/deploy.ts",
+    "deploy:simulate": "cross-env SIMULATE=1 ts-node scripts/deploy.ts"
   },
   "dependencies": {
     "@algorandfoundation/algokit-utils": "^7.0.0",
@@ -31,6 +33,10 @@
     "jest": "^29.5.0",
     "prettier": "^3.0.3",
     "ts-jest": "^29.1.0",
-    "typescript": "5.0.2"
+    "typescript": "5.0.2",
+    "ts-node": "^10.9.2",
+    "@types/node": "^20.11.30",
+    "dotenv": "^16.4.5",
+    "cross-env": "^7.0.3"
   }
 }
