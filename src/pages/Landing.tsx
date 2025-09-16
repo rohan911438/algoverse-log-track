@@ -7,8 +7,12 @@ import { useNavigate } from "react-router-dom";
 const Landing = () => {
   const navigate = useNavigate();
 
-  const handleConnectWallet = () => {
-    navigate("/log-contribution");
+  const handleVolunteerLogin = () => {
+    navigate("/volunteer-dashboard");
+  };
+
+  const handleOrganizerLogin = () => {
+    navigate("/organizer-dashboard");
   };
 
   const stats = [
@@ -119,23 +123,33 @@ const Landing = () => {
               Transform your volunteer work into <span className="text-cyan-400 font-semibold">verifiable digital assets</span> with blockchain-powered security and transparency
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <Button 
-                size="lg" 
-                onClick={handleConnectWallet}
-                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-6 text-lg font-semibold shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105"
-              >
-                Start Tracking Now
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900 px-8 py-6 text-lg font-semibold transition-all duration-300 transform hover:scale-105"
-              >
-                Learn More
-              </Button>
+            {/* Role Selection Buttons */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+              <div className="text-center">
+                <h3 className="text-xl font-semibold text-white mb-3">I am a Volunteer</h3>
+                <Button 
+                  size="lg" 
+                  onClick={handleVolunteerLogin}
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-8 py-6 text-lg font-semibold shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105"
+                >
+                  <Users className="mr-2 h-5 w-5" />
+                  Volunteer Login
+                </Button>
+                <p className="text-gray-400 text-sm mt-2">Log and track your contributions</p>
+              </div>
+              
+              <div className="text-center">
+                <h3 className="text-xl font-semibold text-white mb-3">I am an Organizer</h3>
+                <Button 
+                  size="lg" 
+                  onClick={handleOrganizerLogin}
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-6 text-lg font-semibold shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+                >
+                  <Shield className="mr-2 h-5 w-5" />
+                  Organizer Login
+                </Button>
+                <p className="text-gray-400 text-sm mt-2">Review and approve contributions</p>
+              </div>
             </div>
 
             {/* Stats Section */}
@@ -281,18 +295,19 @@ const Landing = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
-                onClick={handleConnectWallet}
+                onClick={handleVolunteerLogin}
                 className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-10 py-6 text-lg font-semibold shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105"
               >
-                Get Started Now
+                Join as Volunteer
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button 
                 size="lg" 
-                variant="outline"
-                className="border-2 border-white/30 text-white hover:bg-white hover:text-slate-900 px-10 py-6 text-lg font-semibold transition-all duration-300"
+                onClick={handleOrganizerLogin}
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-10 py-6 text-lg font-semibold shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
               >
-                View Demo
+                Manage as Organizer
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </div>
             
