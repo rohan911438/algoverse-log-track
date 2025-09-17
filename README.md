@@ -1,4 +1,26 @@
-# Welcome to your Lovable project
+# AlgoVerse Log Track
+
+**Team**: BROTHERHOOD | **Developer**: Rohan Kumar
+
+A decentralized volunteer contribution tracking system built on Algorand blockchain.
+
+## 🚀 Quick Links
+
+- **📱 Frontend Documentation**: [FRONTEND_README.md](./FRONTEND_README.md)
+- **🖥️ Backend Setup Guide**: [backend/SETUP_GUIDE.md](./backend/SETUP_GUIDE.md)
+- **🔗 Deployment Info**: [DEPLOYMENT_INFO.md](./DEPLOYMENT_INFO.md) - **Contains wallet addresses and contract info**
+- **⚙️ Algorand Contracts**: [algorand-contracts/README.md](./algorand-contracts/README.md)
+
+## 🔑 Key Deployment Information
+
+**Lute Wallet Address (TestNet)**: `I7N2JND35J2QNBO4XYDYRDUWPP7X7LJUMGDRBHQOTRPTQGZTOBFG7ZON7U`
+
+**Contract Status**: 
+- Organizer Registry: Ready for deployment
+- Contribution Logger: Ready for deployment
+- [View full deployment details](./DEPLOYMENT_INFO.md)
+
+---
 
 ## Project info
 
