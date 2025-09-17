@@ -16,6 +16,8 @@ const connectDB = async () => {
   try {
     const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/algoverse';
     
+    console.log(`🔄 Attempting to connect to MongoDB at: ${mongoURI}`);
+    
     const options = {
       // Connection options
       maxPoolSize: 10, // Maximum number of connections in the connection pool
@@ -38,8 +40,34 @@ const connectDB = async () => {
     console.log(`📊 Connection State: ${getConnectionState(conn.connection.readyState)}`);
     
   } catch (error) {
-    console.error('❌ MongoDB connection error:', error);
-    process.exit(1);
+    console.error('❌ MongoDB connection error:', error.message);
+    console.log(`
+🚨 MongoDB Connection Failed
+---------------------------------------------------------------
+It looks like MongoDB is not running on your system.
+
+To fix this:
+
+1. Install MongoDB Community Edition:
+   - Download from: https://www.mongodb.com/try/download/community
+   - Or use MongoDB Atlas (cloud): https://www.mongodb.com/cloud/atlas
+
+2. For local MongoDB installation:
+   - Windows: Run 'mongod' in a separate terminal
+   - Or use MongoDB Compass for a GUI
+
+3. For MongoDB Atlas (cloud):
+   - Create a free cluster at https://www.mongodb.com/cloud/atlas
+   - Update MONGODB_URI in your .env file with the connection string
+
+The server will continue running, but database operations will fail until MongoDB is available.
+---------------------------------------------------------------
+    `);
+    
+    // Don't exit the process in development, just log the error
+    if (process.env.NODE_ENV === 'production') {
+      process.exit(1);
+    }
   }
 };
 

@@ -227,8 +227,7 @@ const contributionSchema = new mongoose.Schema({
   // Blockchain Integration
   blockchain: {
     txId: {
-      type: String,
-      index: true
+      type: String
     },
     
     blockNumber: Number,

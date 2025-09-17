@@ -6,6 +6,12 @@ type = 'contract'
 name = 'algorand-contracts'
 artifacts = 'contracts/artifacts'
 
+[project.deploy]
+command = "node deploy.js"
+
+[project.deploy.testnet]
+environment_secrets = ["DEPLOYER_MNEMONIC"]
+
 [project.run]
 build = { commands = [ 
   'npm run build',
@@ -13,3 +19,6 @@ build = { commands = [
 test = { commands = [
   'npm run test',
 ], description = 'Run smart contract tests' }
+deploy = { commands = [
+  'node deploy.js',
+], description = 'Deploy smart contracts to network' }
