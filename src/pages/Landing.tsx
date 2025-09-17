@@ -5,6 +5,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Shield, Zap, CheckCircle, Users, Globe, Award, TrendingUp, Clock, Star, ArrowRight, Lock, Wallet, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import WalletMenu from "@/components/WalletMenu";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -217,6 +218,11 @@ const Landing = () => {
             <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">
               Transform your volunteer work into <span className="text-cyan-400 font-semibold">verifiable digital assets</span> with blockchain-powered security and transparency
             </p>
+
+            {/* Pera Wallet Connection */}
+            <div className="mb-8">
+              <WalletMenu />
+            </div>
 
             {/* Wallet Status */}
             {walletConnected && (
