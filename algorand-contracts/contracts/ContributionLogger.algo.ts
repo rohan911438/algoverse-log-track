@@ -19,7 +19,6 @@ export class ContributionLogger extends Contract {
   /**
    * Initialize the ContributionLogger contract
    */
-  @method
   createApplication(organizerRegistryAppId: uint64): void {
     this.organizerRegistryAppId.value = organizerRegistryAppId;
     this.totalContributions.value = 0;
@@ -29,7 +28,6 @@ export class ContributionLogger extends Contract {
   /**
    * Log a contribution (called by authorized organizers)
    */
-  @method
   logContribution(
     volunteer: Address,
     contributionType: string,
@@ -78,7 +76,6 @@ export class ContributionLogger extends Contract {
   /**
    * Verify a contribution exists and return details
    */
-  @method
   verifyContribution(contributionId: uint64): [uint64, uint64] {
     // Return basic verification info: exists (1/0), timestamp
     if (contributionId > 0 && contributionId <= this.contributionCounter.value) {
@@ -90,7 +87,6 @@ export class ContributionLogger extends Contract {
   /**
    * Get volunteer statistics
    */
-  @method
   getVolunteerStats(volunteer: Address): [uint64, uint64, uint64] {
     if (!this.volunteerContributions(volunteer).exists) {
       return [0, 0, 0]; // [contributions, reputation, lastTime]
@@ -106,7 +102,6 @@ export class ContributionLogger extends Contract {
   /**
    * Bulk log contributions (for efficiency)
    */
-  @method
   bulkLogContributions(
     volunteers: Address[],
     contributionType: string,
@@ -151,7 +146,6 @@ export class ContributionLogger extends Contract {
   /**
    * Opt in to start tracking contributions
    */
-  @method
   optIn(): void {
     this.volunteerContributions(this.txn.sender).value = 0;
     this.volunteerReputation(this.txn.sender).value = 100;
@@ -161,7 +155,6 @@ export class ContributionLogger extends Contract {
   /**
    * Get contract statistics
    */
-  @method
   getContractStats(): [uint64, uint64] {
     return [this.totalContributions.value, this.contributionCounter.value];
   }

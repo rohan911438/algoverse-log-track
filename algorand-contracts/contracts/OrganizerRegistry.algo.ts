@@ -21,7 +21,6 @@ export class OrganizerRegistry extends Contract {
   /**
    * Initialize contract on deployment
    */
-  @method
   createApplication(): void {
     this.owner.value = this.txn.sender;
     this.totalOrganizers.value = 0;
@@ -31,7 +30,6 @@ export class OrganizerRegistry extends Contract {
   /**
    * Authorize an organizer (only owner can call)
    */
-  @method
   authorize(account: Address): void {
     assert(this.txn.sender === this.owner.value, 'Only contract owner can authorize');
     assert(this.authorized(account).exists, 'Account must opt-in first');
@@ -48,7 +46,6 @@ export class OrganizerRegistry extends Contract {
   /**
    * Deauthorize an organizer (only owner can call)
    */
-  @method
   deauthorize(account: Address): void {
     assert(this.txn.sender === this.owner.value, 'Only contract owner can deauthorize');
     assert(this.authorized(account).exists, 'Account must opt-in first');
@@ -64,7 +61,6 @@ export class OrganizerRegistry extends Contract {
   /**
    * Check if an account is authorized (public method)
    */
-  @method
   checkAuthorization(account: Address): uint64 {
     if (this.authorized(account).exists) {
       return this.authorized(account).value;
@@ -75,7 +71,6 @@ export class OrganizerRegistry extends Contract {
   /**
    * Update organizer stats after verifying contributions
    */
-  @method
   updateOrganizerStats(organizer: Address, contributionsCount: uint64): void {
     assert(this.authorized(organizer).value === 1, 'Account not authorized');
     assert(this.authorized(organizer).exists, 'Organizer must opt-in first');
@@ -94,7 +89,6 @@ export class OrganizerRegistry extends Contract {
   /**
    * Get organizer information
    */
-  @method
   getOrganizerInfo(account: Address): [uint64, uint64, uint64] {
     if (!this.authorized(account).exists) {
       return [0, 0, 0]; // [authorized, reputation, contributions_verified]
@@ -110,11 +104,10 @@ export class OrganizerRegistry extends Contract {
   /**
    * Opt into the contract (required before authorization)
    */
-  @method
   optIn(): void {
     // Initialize local state for the sender
     this.authorized(this.txn.sender).value = 0;
     this.reputation(this.txn.sender).value = 0;
     this.contributionsVerified(this.txn.sender).value = 0;
   }
-} 
+}

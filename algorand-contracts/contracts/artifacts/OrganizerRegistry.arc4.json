@@ -1,0 +1,91 @@
+{
+  "name": "OrganizerRegistry",
+  "desc": "",
+  "methods": [
+    {
+      "name": "createApplication",
+      "desc": "Initialize contract on deployment",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "authorize",
+      "desc": "Authorize an organizer (only owner can call)",
+      "args": [
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "deauthorize",
+      "desc": "Deauthorize an organizer (only owner can call)",
+      "args": [
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "checkAuthorization",
+      "desc": "Check if an account is authorized (public method)",
+      "args": [
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "updateOrganizerStats",
+      "desc": "Update organizer stats after verifying contributions",
+      "args": [
+        {
+          "name": "organizer",
+          "type": "address"
+        },
+        {
+          "name": "contributionsCount",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "getOrganizerInfo",
+      "desc": "Get organizer information",
+      "args": [
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "(uint64,uint64,uint64)"
+      }
+    },
+    {
+      "name": "optIn",
+      "desc": "Opt into the contract (required before authorization)",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    }
+  ]
+}

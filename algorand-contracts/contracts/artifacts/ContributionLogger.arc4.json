@@ -1,0 +1,115 @@
+{
+  "name": "ContributionLogger",
+  "desc": "",
+  "methods": [
+    {
+      "name": "createApplication",
+      "desc": "Initialize the ContributionLogger contract",
+      "args": [
+        {
+          "name": "organizerRegistryAppId",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "logContribution",
+      "desc": "Log a contribution (called by authorized organizers)",
+      "args": [
+        {
+          "name": "volunteer",
+          "type": "address"
+        },
+        {
+          "name": "contributionType",
+          "type": "string"
+        },
+        {
+          "name": "hours",
+          "type": "uint64"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "location",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "verifyContribution",
+      "desc": "Verify a contribution exists and return details",
+      "args": [
+        {
+          "name": "contributionId",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "(uint64,uint64)"
+      }
+    },
+    {
+      "name": "getVolunteerStats",
+      "desc": "Get volunteer statistics",
+      "args": [
+        {
+          "name": "volunteer",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "(uint64,uint64,uint64)"
+      }
+    },
+    {
+      "name": "bulkLogContributions",
+      "desc": "Bulk log contributions (for efficiency)",
+      "args": [
+        {
+          "name": "volunteers",
+          "type": "address[]"
+        },
+        {
+          "name": "contributionType",
+          "type": "string"
+        },
+        {
+          "name": "hours",
+          "type": "uint64[]"
+        },
+        {
+          "name": "descriptions",
+          "type": "string[]"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "optIn",
+      "desc": "Opt in to start tracking contributions",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "getContractStats",
+      "desc": "Get contract statistics",
+      "args": [],
+      "returns": {
+        "type": "(uint64,uint64)"
+      }
+    }
+  ]
+}
