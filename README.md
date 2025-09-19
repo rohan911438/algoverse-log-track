@@ -1,95 +1,105 @@
 # AlgoVerse Log Track
 
-**Team**: BROTHERHOOD | **Developer**: Rohan Kumar
+AlgoVerse Log Track is a decentralized application (dApp) designed to securely log, verify, and track volunteer contributions using the Algorand blockchain. The project aims to provide transparent, tamper-proof records of community service, making it easy for volunteers and organizations to showcase impact and build trust.
 
-A decentralized volunteer contribution tracking system built on Algorand blockchain.
+## 🚀 Technology Stack
 
-## 🚀 Quick Links
+- **Frontend:**  
+  - React (TypeScript)  
+  - Vite (build tool)  
+  - Tailwind CSS (utility-first styling)  
+  - shadcn/ui (modern UI components)  
+  - Lucide React (icon library)  
+  - React Query (data fetching/caching)  
+  - React Hook Form & Zod (form validation)  
+  - Radix UI (accessibility primitives)
 
-- **📱 Frontend Documentation**: [FRONTEND_README.md](./FRONTEND_README.md)
-- **🖥️ Backend Setup Guide**: [backend/SETUP_GUIDE.md](./backend/SETUP_GUIDE.md)
-- **🔗 Deployment Info**: [DEPLOYMENT_INFO.md](./DEPLOYMENT_INFO.md) - **Contains wallet addresses and contract info**
-- **⚙️ Algorand Contracts**: [algorand-contracts/README.md](./algorand-contracts/README.md)
+- **Backend:**  
+  - Node.js & Express.js  
+  - MongoDB (Mongoose ODM)  
+  - JWT authentication  
+  - RESTful API endpoints  
+  - Input validation, error handling, and security best practices
 
-## 🔑 Key Deployment Information
+- **Blockchain Integration:**  
+  - Algorand smart contracts (TealScript)  
+  - AlgoSDK (JavaScript SDK for Algorand)  
+  - PureStake API (TestNet access)  
+  - TypeScript contract clients  
+  - Lute Wallet & Pera Wallet support (TestNet and demo mode)
 
-**Lute Wallet Address (TestNet)**: `I7N2JND35J2QNBO4XYDYRDUWPP7X7LJUMGDRBHQOTRPTQGZTOBFG7ZON7U`
+## ✨ Features
 
-**Contract Status**: 
-- Organizer Registry: Ready for deployment
-- Contribution Logger: Ready for deployment
-- [View full deployment details](./DEPLOYMENT_INFO.md)
+- **Wallet Integration:**  
+  - Connect with Lute Wallet or Pera Wallet for secure authentication  
+  - Demo mode for hackathon presentations and development  
+  - Persistent wallet sessions
+
+- **Contribution Management:**  
+  - Log volunteer activities with details (time, location, organization, description)  
+  - Multi-step verification workflow for authenticity  
+  - Immutable blockchain recording for each contribution  
+  - Reputation scoring and badge system
+
+- **Dashboards:**  
+  - Volunteer dashboard: Track personal contributions, stats, and badges  
+  - Organizer dashboard: Manage organization profile, verify contributions, view analytics
+
+- **Smart Contracts:**  
+  - Organizer Registry: Manages organization registration and authorization  
+  - Contribution Logger: Records and verifies volunteer contributions  
+  - Bulk logging and contract statistics endpoints
+
+- **Security:**  
+  - JWT-based authentication  
+  - Rate limiting and CORS protection  
+  - Input validation and error handling  
+  - Secure wallet management (never expose mnemonics or private keys)
+
+- **Modern UI/UX:**  
+  - Responsive, mobile-first design  
+  - Dark/light mode support  
+  - Smooth animations and transitions
+
+## 📝 Getting Started
+
+1. **Install dependencies:**  
+   ```sh
+   npm install
+   ```
+
+2. **Start development server:**  
+   ```sh
+   npm run dev
+   ```
+
+3. **Connect your wallet:**  
+   - Use Lute Wallet or Pera Wallet for full blockchain functionality  
+   - Demo mode available for testing without a real wallet
+
+4. **Log and verify contributions:**  
+   - Use the dashboard to record activities and view blockchain verification
+
+## 🔑 Lute Wallet Integration
+
+Lute Wallet is used for secure authentication and transaction signing on Algorand TestNet.  
+- Connect your wallet to log and verify contributions  
+- Demo mode simulates wallet connection for presentations  
+- Never share your mnemonic or private keys
+
+## 📦 Project Structure
+
+- `src/` – Frontend source code (components, pages, contexts, hooks, lib)
+- `backend/` – Backend API, models, middleware, routes, config
+- `algorand-contracts/` – Smart contracts, deployment scripts, TypeScript clients
+
+## 📚 Documentation
+
+- Frontend: [FRONTEND_README.md](FRONTEND_README.md)
+- Backend: [backend/SETUP_GUIDE.md](backend/SETUP_GUIDE.md)
+- Smart Contracts: [algorand-contracts/README.md](algorand-contracts/README.md)
+- Deployment Info: [DEPLOYMENT_INFO.md](DEPLOYMENT_INFO.md)
 
 ---
 
-## Project info
-
-**URL**: https://lovable.dev/projects/b36b8d42-8fef-4e50-88ec-073ac32d325e
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/b36b8d42-8fef-4e50-88ec-073ac32d325e) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/b36b8d42-8fef-4e50-88ec-073ac32d325e) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+AlgoVerse Log Track empowers volunteers and organizations to build verifiable, permanent records of community impact—secure, transparent, and ready for the future.
